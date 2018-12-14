@@ -8,10 +8,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Material
 import { MaterialModule } from './material';
+import { StatusLogoComponent } from './components/status-logo/status-logo.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StatusLogoComponent
   ],
   imports: [
     BrowserModule,

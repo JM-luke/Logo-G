@@ -1,9 +1,8 @@
 // Datos de prueba para d3 gráfico
 class DataLogo {
-
+    open: number;
+    close: number;
     date: string | Date;
-    data: {};
-
 }
 class Input{
     name: String;

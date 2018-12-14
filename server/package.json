@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Logo Web Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JM-luke/Logo-G.git"
+  },
+  "keywords": [
+    "Logo",
+    "Siemens",
+    "Web",
+    "server",
+    "Angular",
+    "Socket.io"
+  ],
+  "author": "José Manuel Luque Pastor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JM-luke/Logo-G/issues"
+  },
+  "homepage": "https://github.com/JM-luke/Logo-G#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "moment": "^2.23.0",
+    "socket.io": "^2.2.0"
+  }
+}
