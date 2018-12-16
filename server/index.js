@@ -1,31 +1,43 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const http = require('http').Server(app);
+const morgan = require('morgan');
 const dataLogo = require('./dataLogo');
-
+const { mongoose } = require('./database'); //Conectar a MongoDB
 const io = require('socket.io')(http);
+const cors = require('cors');
 
-const port = 3000;
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+//settings
+app.set('port', process.env.PORT || 3000);
 
-app.get('/api/dataLogo', (req, res) => {
-  res.send(dataLogo.logoPositions);
-});
+//middlewares
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(cors({origin: '*'}));
+
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
+
+//routes
+app.use('/api/users',require('./routes/user.routes'));
+app.use('/api/dataLogo',require('./routes/dataLogo.routes'));
+
+//starting the server
 
 setInterval(function () {
     dataLogo.updateLogo();
     io.sockets.emit('dataLogo', dataLogo.logoPositions[0]);
-    console.log(`Emitiendo ${dataLogo.logoPositions[0]} `);
 }, 5000);
 
+// socket.io
 io.on('connection', function (socket) {
     console.log('a user connected');
   });
 
-http.listen(port, () => {
-  console.log(`Listening on *:${port}`);
+http.listen(app.get('port'), () => {
+  console.log(`Listening on port: ${app.get('port')}`);
 });

@@ -93,7 +93,10 @@ export class StatusLogoComponent implements OnChanges {
           return _this.chartProps.x(d.date.getTime());
         }
       })
-      .y(function (d) { console.log('Close market'); return _this.chartProps.y(d.close); });
+      .y(function (d) { 
+        //console.log('Close market'); 
+        return _this.chartProps.y(d.close);
+      });
   
     // Define the line
     var valueline2 = d3.line<DataLogo>()
@@ -102,7 +105,10 @@ export class StatusLogoComponent implements OnChanges {
           return _this.chartProps.x(d.date.getTime());
         }
       })
-      .y(function (d) { console.log('Open market'); return _this.chartProps.y(d.open); });
+      .y(function (d) { 
+        //console.log('Open market'); 
+        return _this.chartProps.y(d.open); 
+      });
   
     var svg = d3.select(this.chartElement.nativeElement)
       .append('svg')

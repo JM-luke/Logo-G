@@ -4,6 +4,8 @@
   "description": "Logo Web Server",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,8 +27,14 @@
   },
   "homepage": "https://github.com/JM-luke/Logo-G#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.16.4",
+    "mogoose": "^3.1.8",
     "moment": "^2.23.0",
+    "mongoose": "^5.4.0",
     "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1"
   }
 }

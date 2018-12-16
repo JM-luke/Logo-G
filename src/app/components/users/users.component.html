@@ -1,0 +1,52 @@
+
+<div class="container">
+  <div class="row formulario">
+    <div class="col s5">
+      <div class="card">
+        <div class="card-content">
+          <form #userForm="ngForm" (ngSubmit)="addUser(userForm)">
+            <div class="row">
+              <div class="input-field col s12">
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="userService.selectedUser._id" >
+                <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="userService.selectedUser.nombre" placeholder="Enter your Name">
+                <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="userService.selectedUser.apellidos" placeholder="Enter your Surname">
+                <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" placeholder="Enter your email">
+                <input type="text" name="role" #role="ngModel" [(ngModel)]="userService.selectedUser.role" placeholder="Enter your role">
+                <input type="text" name="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password" placeholder="Enter your password">
+              </div>
+              <div class="card-action">
+                <div class="input-field col s12">
+                  <button class="btn right" (click)="resetForm(userForm)">Clean</button>
+                  <button class="btn right">Save</button>
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col s7">
+      <table>
+        <thead>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>email</th>
+          <th>role</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of userService.users">
+            <td>{{user.nombre}}</td>
+            <td>{{user.apellidos}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+            <td>
+              <a (click)="editUser(user)"><i class="material-icons">edit</i></a>
+              <a (click)="deleteUser(user._id)"><i class="material-icons">delete</i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

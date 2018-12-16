@@ -1,4 +1,26 @@
-<i class="material-icons">face</i>
-<mat-icon>home</mat-icon>
-<app-status-logo [logoStatus]="logoStatusToPlot"></app-status-logo>
 
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+      <span>{{title}}</span>
+      <span class="example-spacer"></span>
+      <mat-icon class="example-icon">favorite</mat-icon>
+      <mat-icon class="example-icon">delete</mat-icon>
+
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>dialpad</mat-icon> Menu1</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon> Menu2</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+      </mat-menu>
+      
+  </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>  
+
+<!-- <i class="material-icons">face</i>
+<mat-icon>home</mat-icon>
+<app-status-logo [logoStatus]="logoStatusToPlot"></app-status-logo> -->
