@@ -25,6 +25,8 @@ app.use(cors({origin: '*'}));
 //routes
 app.use('/api/users',require('./routes/user.routes'));
 app.use('/api/dataLogo',require('./routes/dataLogo.routes'));
+app.use('/api/login',require('./routes/login.routes'));
+app.use('/api/register',require('./routes/register.routes'));
 
 //starting the server
 
