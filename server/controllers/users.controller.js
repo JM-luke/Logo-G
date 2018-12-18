@@ -15,21 +15,36 @@ usersCtrl.getUser = async (req, res) => {
 usersCtrl.createUser = async (req, res) => {
     // Usuario creado por admin
     const user = new User(req.body);
-    if(user.name && user.apellidos && user.email && user.password && user.role){
-      // Comprobar si ya existe el usuario
+    if(user.nombre && user.apellidos && user.email && user.password && user.role){
       try {
-        const isSetUser = await User.findOne({ email: user.email.toLowerCase()});
+        // Comprobar si no existe el usuario
+        const isSetUSser = await User.findOne({ email: user.email.toLowerCase()});    
+        if(!isSetUSser){
+          // Encriptar password
+          const hash =  bcrypt.hash(user.password, null, null, (err, hash) => {
+            if(err){
+              res.json({message: 'Server Error'});
+            }else{
+              user.password = hash;
+              user.save()
+                .then(function(userStored){
+                  console.log(userStored);
+                  res.json({user: userStored});
+                })
+                .catch(function(error){
+                  res.json({message: 'Server Error'});
+              });
+            }
+          });
+
+        }else{
+          res.json({message: 'User Error'});
+        }
       } catch (error) {
-        res.json({status: 'Server error'});
-      }
-      if(!isSetUser){
-        // Encriptar password
-        const hash = await bcrypt.hash(user.password, null);
-        user.password = hash;
-        await user.save();
-        res.json({ status: 'User saved' });
+          res.json({message: 'Server Error'});
       }
     }
+    
 
 };
 

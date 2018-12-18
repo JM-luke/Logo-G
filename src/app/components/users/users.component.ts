@@ -30,10 +30,16 @@ export class UsersComponent implements OnInit {
         })
     }else{
       this.userService.postUser(form.value)
-        .subscribe(res => {
-          this.resetForm(form);
-          M.toast({html: 'Usuario guardado!'});
-          this.getUsers();
+        .subscribe( (data)=> {
+          console.log(data);
+          if(!data.hasOwnProperty('user')){
+            M.toast({html: 'Usuario No guardado!'});
+          }else{
+            this.resetForm(form);
+            M.toast({html: 'Usuario guardado!'});
+            this.getUsers();
+          }
+
         });
     }
   }
