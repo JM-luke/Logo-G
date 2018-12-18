@@ -13,9 +13,23 @@ usersCtrl.getUser = async (req, res) => {
 };
 
 usersCtrl.createUser = async (req, res) => {
+    // Usuario creado por admin
     const user = new User(req.body);
-    await user.save();
-    res.json({ status: 'User saved' });
+    if(user.name && user.apellidos && user.email && user.password && user.role){
+      // Comprobar si ya existe el usuario
+      try {
+        const isSetUser = await User.findOne({ email: user.email.toLowerCase()});
+      } catch (error) {
+        res.json({status: 'Server error'});
+      }
+      if(!isSetUser){
+        // Encriptar password
+        const hash = await bcrypt.hash(user.password, null);
+        user.password = hash;
+        await user.save();
+        res.json({ status: 'User saved' });
+      }
+    }
 
 };
 
