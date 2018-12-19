@@ -39,7 +39,6 @@ export class UsersComponent implements OnInit {
             M.toast({html: 'Usuario guardado!'});
             this.getUsers();
           }
-
         });
     }
   }

@@ -13,39 +13,31 @@ usersCtrl.getUser = async (req, res) => {
 };
 
 usersCtrl.createUser = async (req, res) => {
-    // Usuario creado por admin
+    // Usuario creado desde panel admin
     const user = new User(req.body);
     if(user.nombre && user.apellidos && user.email && user.password && user.role){
       try {
+        user.email = user.email.toLowerCase();
         // Comprobar si no existe el usuario
-        const isSetUSser = await User.findOne({ email: user.email.toLowerCase()});    
-        if(!isSetUSser){
+        const isSetUSser = await User.findOne({ email: user.email});
+        if(isSetUSser) throw new Error('User already exists'); 
+        //bcrypt.hash does not return a promise. wraps bcrypt in a promise in order to use await.
+        const hash = await new Promise((resolve, reject) => {
           // Encriptar password
-          const hash =  bcrypt.hash(user.password, null, null, (err, hash) => {
-            if(err){
-              res.json({message: 'Server Error'});
-            }else{
-              user.password = hash;
-              user.save()
-                .then(function(userStored){
-                  console.log(userStored);
-                  res.json({user: userStored});
-                })
-                .catch(function(error){
-                  res.json({message: 'Server Error'});
-              });
-            }
+          bcrypt.hash(user.password, null, null, (err, hash) =>{
+            if(err) reject()
+            resolve(hash);
           });
-
-        }else{
-          res.json({message: 'User Error'});
-        }
+        });
+        user.password = hash;
+        const userStored = await user.save();
+        console.log(userStored);
+        res.json({user: userStored});
       } catch (error) {
-          res.json({message: 'Server Error'});
+          if(error.message !== 'User already exists') error.message = 'Server error'
+          res.json({message: error.message});
       }
-    }
-    
-
+    } 
 };
 
 usersCtrl.editUser = async (req, res) => {

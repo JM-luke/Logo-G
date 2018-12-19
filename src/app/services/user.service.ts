@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
+import { GLOBAL } from './global';
 
 // import { Observable } from 'rxjs';
 
@@ -11,7 +12,8 @@ export class UserService {
 
   selectedUser: User;
   users: User[];
-  readonly URL_API = 'http://localhost:3000/api/users';
+  readonly URL_API = GLOBAL.url+'users';
+  readonly URL_API_REG = GLOBAL.url+'register';
 
   constructor(private http: HttpClient) { 
     this.selectedUser = new User();
@@ -32,4 +34,17 @@ export class UserService {
   deleteUser(_id: String){
     return this.http.delete(`${this.URL_API}/${_id}`);
   }
+
+  register(user: User){
+    return this.http.post(this.URL_API_REG, user);
+  }
+
+  signup(){}
+
+  getIdentity(){}
+
+  getToken(){}
+
+  updateUser(){}
+
 }
