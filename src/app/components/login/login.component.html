@@ -1,3 +1,31 @@
-<p>
-  login works!
-</p>
+
+<div class="container">
+  <div class="row formulario">
+
+    <div class="col s4" layout-align="center">
+      <div class="card">
+        <div class="card-content">
+          <form #userForm="ngForm" (ngSubmit)="loginUser(userForm)">
+            <div class="row">
+              <div class="input-field col s12">
+                <input type="text" name="_id" #_id="ngModel" [(ngModel)]="userService.selectedUser._id" >
+                <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="userService.selectedUser.nombre" placeholder="Enter your Name">
+                <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="userService.selectedUser.apellidos" placeholder="Enter your Surname">
+                <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" placeholder="Enter your email">
+                <input type="password" name="password" #password1="ngModel" [(ngModel)]="userService.selectedUser.password" placeholder="Enter your password">
+                <input type="password" name="password2" #password2="ngModel" [(ngModel)]="userService.selectedUser.password2" placeholder="Repeat your password">
+              </div>
+              <div class="card-action">
+                <div class="input-field col s12">
+                  <button class="btn right" (click)="resetForm(userForm)">Clean</button>
+                  <button class="btn right">Save</button>
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

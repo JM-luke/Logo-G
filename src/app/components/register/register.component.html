@@ -5,10 +5,10 @@
     <div class="col s4" layout-align="center">
       <div class="card">
         <div class="card-content">
-          <form #userForm="ngForm" (ngSubmit)="register(userForm)">
+          <form #userForm="ngForm" (ngSubmit)="registerUser(userForm)">
             <div class="row">
               <div class="input-field col s12">
-                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="userService.selectedUser._id" >
+                <input type="text" name="_id" #_id="ngModel" [(ngModel)]="userService.selectedUser._id" >
                 <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="userService.selectedUser.nombre" placeholder="Enter your Name">
                 <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="userService.selectedUser.apellidos" placeholder="Enter your Surname">
                 <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" placeholder="Enter your email">

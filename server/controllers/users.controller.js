@@ -58,4 +58,8 @@ usersCtrl.deleteUser = async (req, res) => {
     res.json({ status: 'User deleted' });
 };
 
+usersCtrl.loginUser = async (req, res) => {
+  console.log('login user');
+};
+
 module.exports = usersCtrl;

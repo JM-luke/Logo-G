@@ -10,6 +10,7 @@ declare var M: any;
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   providers: [UserService]
+
 })
 export class RegisterComponent implements OnInit {
 
@@ -19,17 +20,27 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUser(form: NgForm){
-    console.log('register');
-    this.userService.register(form.value)
-      .subscribe( (data)=> {
-        console.log(data);
-        if(!data.hasOwnProperty('user')){
-          M.toast({html: 'Usuario No registrado!'});
-        }else{
-          this.resetForm(form);
-          M.toast({html: 'Usuario registrado!'});
-        }
-    });
+    if(form.value._id){
+      console.log('update');
+      // this.userService.putUser(form.value)
+      //   .subscribe(res => {
+      //     this.resetForm(form);
+      //     M.toast({html: 'Usuario actualizado!'});
+      //     //this.getUsers();
+      //   })
+    }else{
+      console.log('register');
+      // this.userService.register(form.value)
+      //   .subscribe( (data)=> {
+      //     console.log(data);
+      //     if(!data.hasOwnProperty('user')){
+      //       M.toast({html: 'Usuario No registrado!'});
+      //     }else{
+      //       this.resetForm(form);
+      //       M.toast({html: 'Usuario registrado!'});
+      //     }
+      // });
+    }
   }
   
   resetForm(form?: NgForm){

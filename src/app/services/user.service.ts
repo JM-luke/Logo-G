@@ -14,6 +14,7 @@ export class UserService {
   users: User[];
   readonly URL_API = GLOBAL.url+'users';
   readonly URL_API_REG = GLOBAL.url+'register';
+  readonly URL_API_LOGIN = GLOBAL.url+'login';
 
   constructor(private http: HttpClient) { 
     this.selectedUser = new User();
@@ -39,7 +40,10 @@ export class UserService {
     return this.http.post(this.URL_API_REG, user);
   }
 
-  signup(){}
+  login(user: User){
+    user.getToken  = true;
+    return this.http.post(this.URL_API_LOGIN, user);
+  }
 
   getIdentity(){}
 
