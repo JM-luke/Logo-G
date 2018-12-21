@@ -30,16 +30,16 @@ export class RegisterComponent implements OnInit {
       //   })
     }else{
       console.log('register');
-      // this.userService.register(form.value)
-      //   .subscribe( (data)=> {
-      //     console.log(data);
-      //     if(!data.hasOwnProperty('user')){
-      //       M.toast({html: 'Usuario No registrado!'});
-      //     }else{
-      //       this.resetForm(form);
-      //       M.toast({html: 'Usuario registrado!'});
-      //     }
-      // });
+      this.userService.register(form.value)
+        .subscribe( (data)=> {
+          console.log(data);
+          if(!data.hasOwnProperty('user')){
+            M.toast({html: 'Usuario No registrado!'});
+          }else{
+            this.resetForm(form);
+            M.toast({html: 'Usuario registrado!'});
+          }
+      });
     }
   }
   

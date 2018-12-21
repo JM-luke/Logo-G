@@ -41,7 +41,7 @@ export class UserService {
   }
 
   login(user: User){
-    user.getToken  = true;
+    //user.getToken  = true;
     return this.http.post(this.URL_API_LOGIN, user);
   }
 

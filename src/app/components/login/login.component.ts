@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   }
   
   loginUser(form: NgForm){
-    console.log('Login User');
     this.userService.login(form.value)
       .subscribe( (data)=> {
         console.log(data);
@@ -33,5 +32,11 @@ export class LoginComponent implements OnInit {
           M.toast({html: 'logged'});
         }
     });
+  }
+  resetForm(form?: NgForm){
+    if(form){
+      form.reset();
+      this.userService.selectedUser = new User();
+    }
   }
 }
