@@ -1,12 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
+import { Router, ActivatedRoute }  from '@angular/router';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  implements DoCheck, OnInit{
   title = 'LOGO! WEB SERVER ';
-   constructor(){ 
+  public identity;
+  constructor(
+      private _userService: UserService,
+      private _route: ActivatedRoute,
+      private _router: Router
+    ){ 
+  }
+  ngOnInit(){
+    this.identity = this._userService.getIdentity();
+  }
+
+  ngDoCheck(){
+    this.identity = this._userService.getIdentity();
+  }
+
+  logout(){
+    localStorage.clear();
+    this.identity = null;
+    this._router.navigate(['/']);
   }
 }

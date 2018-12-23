@@ -17,6 +17,6 @@ export class User {
     email: String;
     role: String;
     password: String;
-    getToken: Boolean;
+    getToken: any;
 
 }

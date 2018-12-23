@@ -2,20 +2,19 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
       <span>{{title}}</span>
-      <span class="example-spacer"></span>
-      <mat-icon class="example-icon">favorite</mat-icon>
-      <mat-icon class="example-icon">delete</mat-icon>
+      <span class="spacer"></span>
+      <!--<mat-icon class="example-icon">favorite</mat-icon>
+      <mat-icon class="example-icon">delete</mat-icon> -->
 
-      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>dialpad</mat-icon> Menu1</button>
+      <button mat-button *ngIf="!identity" [routerLink]="['/register']" ><mat-icon>assignment_ind</mat-icon> Register</button>
+      <button mat-button *ngIf="!identity" [routerLink]="['/login']" ><mat-icon>perm_identity</mat-icon> Login</button>
+
+      <button mat-button *ngIf="identity"  [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> {{identity.nombre}}</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
+        <a (click)="logout()" mat-menu-item>logout</a>
+        <a mat-menu-item>Mis datos</a>
       </mat-menu>
-      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon> Menu2</button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button>
-      </mat-menu>
+
       
   </mat-toolbar-row>
 </mat-toolbar>
