@@ -15,7 +15,6 @@ usersCtrl.getUser = async (req, res) => {
 usersCtrl.createUser = async (req, res) => {
     // Usuario creado desde panel admin
     const user = new User(req.body);
-    console.log(user);
     try {
       if(!user.nombre || !user.apellidos || !user.email || !user.password ){
         throw new Error('server error'); 
@@ -34,8 +33,8 @@ usersCtrl.createUser = async (req, res) => {
         });
       });
       user.password = hash;
-      const userStored = await user.save();
-      console.log(userStored);
+      let userStored = await user.save();
+      userStored.password = null;
       res.json({user: userStored});
     } catch (error) {
       console.error(error);

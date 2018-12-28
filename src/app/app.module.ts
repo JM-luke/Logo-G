@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //import { from } from 'rxjs';
 //Routing
@@ -37,7 +37,8 @@ import { LoginComponent } from './components/login/login.component';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    Routing
+    Routing,
+    ReactiveFormsModule
   ],
   providers: [
     AppRoutingProviders

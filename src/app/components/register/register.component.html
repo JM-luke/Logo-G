@@ -1,31 +1,77 @@
+    
+<div class="container">     
+    
 
-<div class="container">
-  <div class="row formulario">
 
-    <div class="col s4" layout-align="center">
-      <div class="card">
-        <div class="card-content">
-          <form #userForm="ngForm" (ngSubmit)="registerUser(userForm)">
-            <div class="row">
-              <div class="input-field col s12">
-                <input type="text" name="_id" #_id="ngModel" [(ngModel)]="userService.selectedUser._id" >
-                <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="userService.selectedUser.nombre" placeholder="Enter your Name">
-                <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="userService.selectedUser.apellidos" placeholder="Enter your Surname">
-                <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" placeholder="Enter your email">
-                <input type="password" name="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password" placeholder="Enter your password">
-                <input type="password" name="password2" #password2="ngModel" [(ngModel)]="userService.selectedUser.password2" placeholder="Repeat your password">
-              </div>
-              <div class="card-action">
-                <div class="input-field col s12">
-                  <button class="btn right" (click)="resetForm(userForm)">Clean</button>
-                  <button class="btn right">Save</button>
-                </div>
+      <div >
+        <mat-card>
+          <mat-card-title>
+            Register
+          </mat-card-title>
+          <form  [formGroup]="registerForm" autocomplete="off" novalidate 
+              (ngSubmit)="registerUser(registerForm)">
+            
+            <mat-card-content>
 
-              </div>
-            </div>
+              <input  type="hidden" name="_id" >
+
+              <mat-form-field >
+                <input  matInput name="nombre" type="text" formControlName="nombre" id="nombre"  placeholder="Enter your Name" >
+                <mat-hint align="end">Not more then 40 characters long.</mat-hint>
+                <mat-error *ngIf="hasError('nombre', 'required')">Name is required</mat-error>
+                <mat-error *ngIf="hasError('nombre', 'maxlength')">You have more than 40 characters</mat-error>
+              </mat-form-field>
+              
+              <mat-form-field >
+                <input  matInput name="apellidos" type="text" formControlName="apellidos" id="apellidos"  placeholder="Enter your Surname" >
+                <mat-hint align="end">Not more then 40 characters long.</mat-hint>
+                <mat-error *ngIf="hasError('apellidos', 'required')">Surname is required</mat-error>
+                <mat-error *ngIf="hasError('apellidos', 'maxlength')">You have more than 40 characters</mat-error>
+              </mat-form-field>
+
+              <mat-form-field >
+                <input  matInput name="email" type="text" formControlName="email" id="email"  placeholder="Enter your email" >
+                <mat-hint align="end">valid email.</mat-hint>
+                <mat-error *ngIf="hasError('email', 'required')">email is required</mat-error>
+                <mat-error *ngIf="hasError('email', 'email')">invalid email</mat-error>
+              </mat-form-field>
+
+              <mat-form-field >
+                <input  matInput name="password" type="password" formControlName="password" id="password"  placeholder="Enter your password" >
+                <mat-hint align="end">mimimun 6 characters long.</mat-hint>
+                <mat-error *ngIf="hasError('password', 'required')">password is required</mat-error>
+                <mat-error *ngIf="hasError('password', 'minlength')">You have less than 6 characters</mat-error>
+              </mat-form-field>
+
+            </mat-card-content>
+          
+            <mat-card-actions>
+                <button mat-raised-button class="btn right" color="primary" (click)="resetForm(registerForm)">Clean</button>
+                <button mat-raised-button class="btn right" [disabled]="!registerForm.valid" color="sucessfull">Save</button>
+            </mat-card-actions>
           </form>
-        </div>
+        </mat-card>
       </div>
-    </div>
-  </div>
+
 </div>
+<!-- 
+<mat-form-field>
+  <input matInput type="text" placeholder="Owner's name" formControlName="name" id="name">
+  <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+  <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+  <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 60 characters</mat-error>
+</mat-form-field>
+ 
+<mat-form-field>
+  <input matInput [matDatepicker]="picker" placeholder="Choose a date of birth" formControlName="dateOfBirth" id="dateOfBirth" 
+      readonly (click)="picker.open()">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+ 
+<mat-form-field>
+  <input matInput type="text" placeholder="Owner's address" formControlName="address">
+  <mat-hint align="end">Not more then 100 characters long.</mat-hint>
+  <mat-error *ngIf="hasError('address', 'required')">Address is required</mat-error>
+  <mat-error *ngIf="hasError('address', 'maxlength')">You have more than 100 characters</mat-error>
+</mat-form-field> -->

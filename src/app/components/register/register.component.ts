@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl, Validators, FormGroup } from '@angular/forms';
 import { User } from 'src/app/models/user';
 
 declare var M: any;
@@ -14,34 +14,56 @@ declare var M: any;
 })
 export class RegisterComponent implements OnInit {
 
+  public registerForm: FormGroup;
+
   constructor(private userService: UserService) { }
 
+
   ngOnInit() {
+    this.registerForm = new FormGroup({
+      nombre: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      apellidos: new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
+    });
   }
 
-  registerUser(form: NgForm){
-    if(form.value._id){
+  public hasError = (controlName: string, errorName: string) =>{
+    return this.registerForm.controls[controlName].hasError(errorName);
+  }
+
+  registerUser(registerForm){
+    if(!this.registerForm.valid){
+      M.toast({html: 'Form No valid!'});
+      return;
+    }
+    let userToRegister: User;
+    userToRegister = registerForm.value;
+    this.userService.selectedUser = userToRegister;
+    if(registerForm.value._id){
       console.log('update');
-      // this.userService.putUser(form.value)
+      // this.userService.putUser(registerFormValue)
       //   .subscribe(res => {
       //     this.resetForm(form);
       //     M.toast({html: 'Usuario actualizado!'});
       //     //this.getUsers();
       //   })
     }else{
+
       console.log('register');
-      this.userService.register(form.value)
+
+      this.userService.register(registerForm.value)
         .subscribe( (data)=> {
           console.log(data);
           if(!data.hasOwnProperty('user')){
             M.toast({html: 'Usuario No registrado!'});
           }else{
-            this.resetForm(form);
+            this.resetForm(registerForm);
             M.toast({html: 'Usuario registrado!'});
           }
       });
     }
-  }
+   }
   
   resetForm(form?: NgForm){
     if(form){
