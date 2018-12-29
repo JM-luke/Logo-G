@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { NgForm, FormControl, Validators, FormGroup } from '@angular/forms';
+import { NgForm, FormControl, Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { User } from 'src/app/models/user';
+import { RegisterUser } from 'src/app/models/register_user';
+import { passwordMatch } from './password-match'
+
 
 declare var M: any;
 
@@ -15,24 +18,32 @@ declare var M: any;
 export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup;
+  private regUser : RegisterUser;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder
+  ) { }
 
 
   ngOnInit() {
-    this.registerForm = new FormGroup({
-      nombre: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-      apellidos: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
+    this.registerForm = this.fb.group({
+      nombre: ['', [Validators.required, Validators.maxLength(30)]],
+      apellidos: ['', [Validators.required, Validators.maxLength(30)]],
+      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      password: this.fb.group({
+        pwd: ['',[Validators.required, Validators.minLength(6)]],
+        confirmPwd: ['',[Validators.required, Validators.minLength(6)]]
+      },{ validator: passwordMatch })
     });
   }
 
   public hasError = (controlName: string, errorName: string) =>{
-    return this.registerForm.controls[controlName].hasError(errorName);
+    return this.registerForm.get(controlName).hasError(errorName);
   }
 
   registerUser(registerForm){
+    console.log(JSON.stringify(registerForm.value));
     if(!this.registerForm.valid){
       M.toast({html: 'Form No valid!'});
       return;

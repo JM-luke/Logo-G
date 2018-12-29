@@ -8,8 +8,7 @@
           <mat-card-title>
             Register
           </mat-card-title>
-          <form  [formGroup]="registerForm" autocomplete="off" novalidate 
-              (ngSubmit)="registerUser(registerForm)">
+          <form  [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm)">
             
             <mat-card-content>
 
@@ -36,22 +35,34 @@
                 <mat-error *ngIf="hasError('email', 'email')">invalid email</mat-error>
               </mat-form-field>
 
-              <mat-form-field >
-                <input  matInput name="password" type="password" formControlName="password" id="password"  placeholder="Enter your password" >
-                <mat-hint align="end">mimimun 6 characters long.</mat-hint>
-                <mat-error *ngIf="hasError('password', 'required')">password is required</mat-error>
-                <mat-error *ngIf="hasError('password', 'minlength')">You have less than 6 characters</mat-error>
-              </mat-form-field>
+              <div formGroupName="password">
+                <mat-form-field >
+                  <input  matInput name="pwd" type="password" formControlName="pwd" id="pwd"  placeholder="Enter your password" >
+                  <mat-hint align="end">mimimun 6 characters long.</mat-hint>
+                  <mat-error *ngIf="hasError('password.pwd', 'required')">password is required</mat-error>
+                  <mat-error *ngIf="hasError('password.pwd', 'minlength')">You have less than 6 characters</mat-error>
+                </mat-form-field>
+  
+                <mat-form-field >
+                  <input  matInput name="confirmPwd" type="password" formControlName="confirmPwd" id="confirmPwd"  placeholder="Repeat your password" >
+                  <mat-hint align="end">mimimun 6 characters long.</mat-hint>
+                  <mat-error *ngIf="hasError('password.confirmPwd', 'required')">password is required</mat-error>
+                  <mat-error *ngIf="hasError('password.confirmPwd', 'minlength')">You have less than 6 characters</mat-error>
+                </mat-form-field>
+                <mat-error *ngIf="hasError('password', 'mismatch')">passwords not match</mat-error>
+              </div>
 
             </mat-card-content>
           
             <mat-card-actions>
-                <button mat-raised-button class="btn right" color="primary" (click)="resetForm(registerForm)">Clean</button>
-                <button mat-raised-button class="btn right" [disabled]="!registerForm.valid" color="sucessfull">Save</button>
+              <button mat-raised-button type="reset" class="btn right" color="primary" (click)="resetForm(registerForm)">Clean</button>
+              <button mat-raised-button type="submit" class="btn right" [disabled]="!registerForm.valid" color="sucessfull">Save</button>
             </mat-card-actions>
           </form>
         </mat-card>
       </div>
+      <p>Form Value {{ registerForm.value | json }}</p>
+      <p>Form status {{ registerForm.status | json }}</p>
 
 </div>
 <!-- 
