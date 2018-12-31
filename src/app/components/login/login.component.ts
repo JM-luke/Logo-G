@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      password: ['',[Validators.required, Validators.minLength(6)]]
+      password: ['',[Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)]]
     });
   }
 
@@ -45,13 +45,13 @@ export class LoginComponent implements OnInit {
             this.identity = data.user_logged.user;
             localStorage.setItem('token', data.user_logged.token);
             localStorage.setItem('identity', JSON.stringify(this.identity));
-            M.toast({html: 'logged'});
+            M.toast({html: 'logged :-)'});
             this._router.navigate(['/']);
             this.resetForm();
             return;
           }
         }
-        M.toast({html: 'You are not logged in!<br/> email or password incorrect.'});
+        M.toast({html: 'You are not logged in :-(<br/> email or password incorrect!.'});
       });
   }
 
