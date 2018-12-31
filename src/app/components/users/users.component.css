@@ -1,27 +1,12 @@
-/* .example-card {
-  max-width: 400px;
-}
-  
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
-}
-.formulario{
-  margin-top: 30px;
-} 
-
-*/
 mat-form-field {
-  height: 25px;
-  width: 80%;
+  width: 100%
 }
 mat-card-title{
   text-align: center;
 }
-
 mat-card{
   text-align: center;
-  padding: 0;
-  margin-top: 20px;
-
+}
+input {
+  height: 25px;
 }

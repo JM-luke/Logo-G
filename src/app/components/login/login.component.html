@@ -38,18 +38,27 @@
           </mat-toolbar>
           <mat-card class="my-card">
             <mat-card-content>
-                <form class="my-form" #userForm="ngForm" (ngSubmit)="loginUser(userForm)">
-                  <mat-form-field appearance="standar">
+                <form class="my-form" [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm)">
+
+                  <mat-form-field>
                       <mat-label>Email</mat-label>
-                      <input  matInput  placeholder="Email" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email">
+                      <input  matInput  type="text" placeholder="Email" formControlName="email" name="email">
+                      <mat-hint align="end">valid email.</mat-hint>
+                      <mat-error *ngIf="hasError('email', 'required')">email is required</mat-error>
+                      <mat-error *ngIf="hasError('email', 'pattern')">invalid email</mat-error>
                   </mat-form-field>
-                  <mat-form-field appearance="standar">
+
+                  <mat-form-field>
                       <mat-label>Password</mat-label>
-                      <input  matInput name="password" type ="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password" placeholder="Enter your password">
+                      <input  matInput name="password" type ="password" formControlName="password" placeholder="Enter your password">
+                      <mat-hint align="end">mimimun 6 characters long.</mat-hint>
+                      <mat-error *ngIf="hasError('password', 'required')">password is required</mat-error>
+                      <mat-error *ngIf="hasError('password', 'minlength')">You have less than 6 characters</mat-error>
                   </mat-form-field>
+                  
                   <mat-card-actions>
-                      <button mat-raised-button class="btn right" color="primary" (click)="resetForm(userForm)">Clean</button>
-                      <button mat-raised-button class="btn right" color="sucessfull">Login</button>
+                      <button mat-raised-button type="reset" class="btn right" color="primary" >Clean</button>
+                      <button mat-raised-button type="submit" class="btn right"  [disabled]="!loginForm.valid" color="sucessfull">Login</button>
       
                   </mat-card-actions>
                 </form>

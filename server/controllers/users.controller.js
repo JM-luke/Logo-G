@@ -13,12 +13,22 @@ usersCtrl.getUser = async (req, res) => {
 };
 
 usersCtrl.createUser = async (req, res) => {
-    // Usuario creado desde panel admin
+
     const user = new User(req.body);
+    console.log(user);
     try {
+      const pass = req.body.password;
+      // vuelvo a confirmar las contraseñas
+      // Si no coinciden user.password será undefined y se lanza el error
+      if(pass.pwd === pass.confirmPwd){
+        user.password = pass.pwd;
+      }
+      user.role = req.body.role || 'ROLE_USER';
+
       if(!user.nombre || !user.apellidos || !user.email || !user.password ){
         throw new Error('server error'); 
       }
+
       user.email = user.email.toLowerCase();
       // Comprobar si no existe el usuario
       const isSetUSser = await User.findOne({ email: user.email});
@@ -38,23 +48,33 @@ usersCtrl.createUser = async (req, res) => {
       res.json({user: userStored});
     } catch (error) {
       console.error(error);
-        if(error.message !== 'User already exists') error.message = 'Server error'
-        res.json({message: error.message});
+      if(error.message !== 'User already exists') error.message = 'Server error'
+      res.json({message: error.message});
     }
 
 };
 
 usersCtrl.editUser = async (req, res) => {
+  try {
     const { id } = req.params;
-    const user = {
-        nombre: req.body.nombre,
-        apellidos: req.body.apellidos,
-        email: req.body.email,
-        role: req.body.role,
-        password: req.body.password
+    const user = new User(req.body);
+    const pass = req.body.password;
+    if(pass.pwd && pass.confirmPwd && pass.pwd === pass.confirmPwd){
+      user.password = pass.pwd;
     }
+    // const user = {
+    //     nombre: req.body.nombre,
+    //     apellidos: req.body.apellidos,
+    //     email: req.body.email,
+    //     role: req.body.role,
+    //     password: req.body.password.pwd 
+    // }
     await User.findByIdAndUpdate(id, { $set: user }, { new: true });
     res.json({ status: 'User updated' });
+    
+  } catch (error) {
+    res.json({ status: 'User not updated'})
+  }
 };
 
 usersCtrl.deleteUser = async (req, res) => {

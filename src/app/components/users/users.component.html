@@ -1,97 +1,91 @@
 
 <div class="container">
   <div class="row">
-    <div class="col s4">
-
-<!-- 
-        <mat-card>
-          <mat-card-title>
-            Users
-          </mat-card-title>
-          <form  [formGroup]="userForm" autocomplete="off" novalidate 
-              (ngSubmit)="addUser(userForm)">
-            
-            <mat-card-content>
-
-              <input  type="hidden" name="_id" >
-              <mat-form-field >
-                  <input  matInput name="nombre" type="text" formControlName="nombre" id="nombre" placeholder="Enter your Name" >
-                  <mat-hint align="end">Not more then 40 characters long.</mat-hint>
-                  <mat-error *ngIf="hasError('nombre', 'required')">Name is required</mat-error>
-                  <mat-error *ngIf="hasError('nombre', 'maxlength')">You have more than 40 characters</mat-error>
-                </mat-form-field>
-                
-                <mat-form-field >
-                  <input  matInput name="apellidos" type="text" formControlName="apellidos" id="apellidos"  placeholder="Enter your Surname" >
-                  <mat-hint align="end">Not more then 40 characters long.</mat-hint>
-                  <mat-error *ngIf="hasError('apellidos', 'required')">Surname is required</mat-error>
-                  <mat-error *ngIf="hasError('apellidos', 'maxlength')">You have more than 40 characters</mat-error>
-                </mat-form-field>
-  
-                <mat-form-field >
-                  <input  matInput name="email" type="text" formControlName="email" id="email"  placeholder="Enter your email" >
-                  <mat-hint align="end">valid email.</mat-hint>
-                  <mat-error *ngIf="hasError('email', 'required')">email is required</mat-error>
-                  <mat-error *ngIf="hasError('email', 'email')">invalid email</mat-error>
-                </mat-form-field>
-
-                <mat-form-field >
-                    <input  matInput name="role" type="text" formControlName="role" id="role"  placeholder="Enter your role" >
-                    <mat-hint align="end">valid role.</mat-hint>
-                    <mat-error *ngIf="hasError('role', 'required')">role is required</mat-error>
-                    <mat-error *ngIf="hasError('role', 'role')">invalid role</mat-error> 
-                  </mat-form-field>
-  
-                <mat-form-field >
-                  <input  matInput name="password" type="password" formControlName="password" id="password"  placeholder="Enter your password" >
-                  <mat-hint align="end">mimimun 6 characters long.</mat-hint>
-                  <mat-error *ngIf="hasError('password', 'required')">password is required</mat-error>
-                  <mat-error *ngIf="hasError('password', 'minlength')">You have less than 6 characters</mat-error>
-                </mat-form-field>
-
-            </mat-card-content>
-            
-            <mat-card-actions>
-              <button mat-raised-button class="btn right" color="primary" (click)="resetForm(userForm)">Clean</button>
-              <button mat-raised-button class="btn right" [disabled]="!userForm.valid" color="sucessfull">Save</button>
-            </mat-card-actions>   
-          </form>
-        </mat-card> 
--->
-
-        <div class="card-content">
-          <form #userForm="ngForm" (ngSubmit)="addUser(userForm)">
-            
-              <div class="input-field ">
-                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="userService.selectedUser._id" >
-                <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="userService.selectedUser.nombre" placeholder="Enter your Name">
-                <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="userService.selectedUser.apellidos" placeholder="Enter your Surname">
-                <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" placeholder="Enter your email">
-                <input type="text" name="role" #role="ngModel" [(ngModel)]="userService.selectedUser.role" placeholder="Enter your role">
-                <input type="text" name="password" #password="ngModel" [(ngModel)]="userService.selectedUser.password" placeholder="Enter your password">
-              </div>
-              <div class="card-action">
-                <div class="input-field">
-                  <button class="btn right" (click)="resetForm(userForm)">Clean</button>
-                  <button class="btn right">Save</button>
-                </div>
-
-              </div>
-            
-            </form>
-          </div>
+     <div class="col s4">
+      <mat-card>
+        <mat-card-title>
+            {{userForm.value._id ? 'EDIT USER' : 'CREATE USER'}}
+        </mat-card-title>
+        <form  [formGroup]="userForm" autocomplete="off" novalidate (ngSubmit)="addUser(userForm)">
           
-        </div>
- 
+          <mat-card-content>
 
+            
+            <mat-form-field  *ngIf="false">
+              <input  matInput name="_id" type="text" formControlName="_id" id="_id"  placeholder="_id">
+            </mat-form-field>
 
+            <mat-form-field >
+              <input  matInput name="nombre" type="text" formControlName="nombre" id="nombre"  placeholder="Name" >
+              <mat-hint align="end">Not more then 40 characters long.</mat-hint>
+              <mat-error *ngIf="hasError('nombre', 'required')">Name is required</mat-error>
+              <mat-error *ngIf="hasError('nombre', 'maxlength')">You have more than 40 characters</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field >
+              <input  matInput name="apellidos" type="text" formControlName="apellidos" id="apellidos"  placeholder="Surname" >
+              <mat-hint align="end">Not more then 40 characters long.</mat-hint>
+              <mat-error *ngIf="hasError('apellidos', 'required')">Surname is required</mat-error>
+              <mat-error *ngIf="hasError('apellidos', 'maxlength')">You have more than 40 characters</mat-error>
+            </mat-form-field>
 
+            <mat-form-field >
+              <input  matInput name="email" type="text" formControlName="email" id="email"  placeholder="email" >
+              <mat-error *ngIf="hasError('email', 'required')">email is required</mat-error>
+              <mat-error *ngIf="hasError('email', 'pattern')">invalid email</mat-error>
+              <mat-hint align="end">valid email.</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select name="role" formControlName="role" id="role"  placeholder="role">
+                <mat-option *ngFor= "let r of roleList"  [value] = "r">
+                   {{r}}
+                </mat-option>
+              </mat-select>
+              <mat-hint align="end">valid role.</mat-hint>
+              <!-- <mat-error *ngIf="hasError('role', 'required')">role is required</mat-error>
+              <mat-error *ngIf="hasError('role', 'role')">invalid role</mat-error>    -->
+            </mat-form-field>
+            
+            <div formGroupName="password" *ngIf="!userForm.value._id">
+              <mat-form-field >
+                <input  matInput name="pwd" type="password" formControlName="pwd" id="pwd"  placeholder="Enter password" >
+                <mat-hint align="end">mimimun 6 characters long.</mat-hint>
+                <!-- <mat-error *ngIf="hasError('password.pwd', 'required')">password is required</mat-error>
+                <mat-error *ngIf="hasError('password.pwd', 'minlength')">You have less than 6 characters</mat-error> -->
+              </mat-form-field>
+
+              <mat-form-field >
+                <input  matInput name="confirmPwd" type="password" formControlName="confirmPwd" id="confirmPwd"  placeholder="Repeat password" >
+                <mat-hint align="end">mimimun 6 characters long.</mat-hint>
+                <!-- <mat-error *ngIf="hasError('password.confirmPwd', 'required')">password is required</mat-error>
+                <mat-error *ngIf="hasError('password.confirmPwd', 'minlength')">You have less than 6 characters</mat-error> -->
+              </mat-form-field>
+              <mat-error *ngIf="hasError('password', 'mismatch')">passwords not match</mat-error>
+            </div>
+
+            
+          </mat-card-content>
+        
+          <mat-card-actions>
+            <button mat-raised-button type="reset" class="btn right" color="primary">Clean</button>
+            <button mat-raised-button type="submit" class="btn right" [disabled]="!userForm.valid || userForm.pristine" color="sucessfull">{{userForm.value._id ? 'Update' : 'Save'}}</button>
+          </mat-card-actions>
+        </form>
+      </mat-card>
+      <p>Form valid {{userForm.valid}}</p>
+      <p>Form pristine {{userForm.pristine}}</p>
+    </div>
+     
+    <div class="col s1"></div>
+
+    <!-- tabla --> 
       
-      <div class="col s7">
+    <div class="col s7">
         <table>
           <thead>
-            <th>Nombre</th>
-            <th>Apellidos</th>
+            <th>Name</th>
+            <th>Surname</th>
             <th>email</th>
             <th>role</th>
           </thead>
@@ -107,8 +101,8 @@
               </td>
             </tr>
           </tbody>
-        </table>
-      </div>
-
+        </table> 
+    </div>
   </div>
 </div>
+    

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { NgForm, FormControl, Validators, FormGroup } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/models/user';
-// import { from } from 'rxjs';
+import { passwordMatch } from '../../services/password-match'
+
 
 declare var M: any;
 
@@ -15,49 +16,59 @@ declare var M: any;
 export class UsersComponent implements OnInit {
   
   public userForm: FormGroup;
-  constructor(private userService: UserService) { }
+  private roleList: string[];
+  
 
-  ngOnInit() {
-    this.getUsers();
-    this.userForm = new FormGroup({
-      nombre: new FormControl(this.userService.selectedUser.nombre, [Validators.required, Validators.maxLength(30)]),
-      apellidos: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-      email: new FormControl('', [Validators.required]),
-      role: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)])
-    });
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+  ) { }
     
+  ngOnInit() {
+    this.roleList = ['ROLE_USER','ROLE_SUPER','ROLE_ADMIN'];
+    this.userForm = this.fb.group({
+      _id: [''],
+      nombre: ['', [Validators.required, Validators.maxLength(30)]],
+      apellidos: ['', [Validators.required, Validators.maxLength(30)]],
+      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      role: ['ROLE_USER', Validators.required],
+      password: this.fb.group({
+        pwd: ['', [ Validators.minLength(6)]],
+        confirmPwd: ['', [Validators.minLength(6)]]
+      },{ validator: passwordMatch })
+    });
+    this.getUsers();
   }
 
   public hasError = (controlName: string, errorName: string) =>{
-    return this.userForm.controls[controlName].hasError(errorName);
+    return this.userForm.get(controlName).hasError(errorName);
   }
   
-  addUser(userForm){
+  addUser(userForm: FormGroup){
     if(!this.userForm.valid){
-      console.log('Form NO valid');
       M.toast({html: 'Form No valid!'});
       return;
     }
     if(userForm.value._id){
       this.userService.putUser(userForm.value)
-        .subscribe(res => {
-          this.resetForm(userForm);
-          M.toast({html: 'Usuario actualizado!'});
+        .subscribe(data => {
           this.getUsers();
-        })
+          M.toast({html: 'User updated!'});
+          //this.resetForm();
+        });
+        
     }else{
+      delete userForm.value._id;
       this.userService.postUser(userForm.value)
         .subscribe( (data)=> {
-          console.log(data);
           if(!data.hasOwnProperty('user')){
-            M.toast({html: 'Usuario No guardado!'});
+            M.toast({html: 'User not saved!'});
           }else{
-            this.resetForm(userForm);
-            M.toast({html: 'Usuario guardado!'});
+            M.toast({html: 'User saved!'});
             this.getUsers();
+            //this.resetForm();
           }
-        });
+      });
     }
   }
 
@@ -74,7 +85,10 @@ export class UsersComponent implements OnInit {
 
   editUser(user: User){
     this.userService.selectedUser = user;
- }
+    delete user.__v;
+    user.password = {pwd: null, confirmPwd: null};
+    this.userForm.setValue(user);
+  }
 
   getUsers(){
     this.userService.getUsers()
@@ -83,11 +97,22 @@ export class UsersComponent implements OnInit {
       })
   }
 
-  resetForm(form?: NgForm){
-    if(form){
-      form.reset();
-      //this.userService.selectedUser = new User();
-    }
+  resetForm(){
+    //this.userService.selectedUser = new User();
+  
+    //this.userForm.reset();
+      this.userForm.reset({
+        _id: null,
+        nombre: {value: ' ', disabled: false},
+        apellidos: ' ',
+        email: 'admin@admin.com',
+        role: ' ',
+        password: {
+          pwd: null,
+          confirmPwd: null
+        }
+      });
+   
   }
 
 }

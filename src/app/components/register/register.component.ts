@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { NgForm, FormControl, Validators, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/models/user';
-import { RegisterUser } from 'src/app/models/register_user';
-import { passwordMatch } from './password-match'
+import { passwordMatch } from '../../services/password-match'
 
 
 declare var M: any;
@@ -18,15 +17,14 @@ declare var M: any;
 export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup;
-  private regUser : RegisterUser;
 
   constructor(
     private userService: UserService,
     private fb: FormBuilder
   ) { }
 
-
   ngOnInit() {
+    //
     this.registerForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.maxLength(30)]],
       apellidos: ['', [Validators.required, Validators.maxLength(30)]],
@@ -42,8 +40,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get(controlName).hasError(errorName);
   }
 
-  registerUser(registerForm){
-    console.log(JSON.stringify(registerForm.value));
+  registerUser(registerForm: FormGroup){
     if(!this.registerForm.valid){
       M.toast({html: 'Form No valid!'});
       return;
@@ -69,14 +66,13 @@ export class RegisterComponent implements OnInit {
           if(!data.hasOwnProperty('user')){
             M.toast({html: 'Usuario No registrado!'});
           }else{
-            this.resetForm(registerForm);
             M.toast({html: 'Usuario registrado!'});
           }
       });
     }
    }
   
-  resetForm(form?: NgForm){
+  resetForm(form?: FormGroup){
     if(form){
       form.reset();
       this.userService.selectedUser = new User();

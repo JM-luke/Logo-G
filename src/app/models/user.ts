@@ -1,22 +1,45 @@
-import { getToken } from '@angular/router/src/utils/preactivation';
 
+// export class User {
+//     constructor(_id = '', __v = '', nombre = '', apellidos = '', email = '', role = 'ROLE_USER', pwd = '', confirmPwd = '', getToken = false){
+//         _id: _id;
+//         __v: __v
+//         nombre: nombre;
+//         apellidos: apellidos;
+//         email: email;
+//         role: role;
+//         password: {
+//           pwd: pwd;
+//           confirmPwd: confirmPwd;
+//         };
+//         getToken: getToken;
+//     }
+
+//     _id: String;
+//     __v: String
+//     nombre: String;
+//     apellidos: String;
+//     email: String;
+//     role: String;
+//     password: String;
+//     getToken: any;
+
+// }
 export class User {
-    constructor(_id = '', nombre = '', apellidos = '', email = '', role = 'ROLE_USER', password = '', getToken = false){
-        _id: _id;
-        nombre: nombre;
-        apellidos: apellidos;
-        email: email;
-        role: role;
-        password: password;
-        getToken: getToken;
-    }
-
-    _id: String;
-    nombre: String;
-    apellidos: String;
-    email: String;
-    role: String;
-    password: String;
+    _id: number;
+    __v: number;
+    nombre: string;
+    apellidos: string;
+    email: string;
+    role: string;
+    password: {
+        pwd: string;
+        confirmPwd: string;
+    };
     getToken: any;
+
+    constructor(values: Object = {}){
+        //constructor initialization
+        Object.assign(this, values);
+    }
 
 }
