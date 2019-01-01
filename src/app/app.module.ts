@@ -19,6 +19,8 @@ import { LogoComponent } from './components/logo/logo.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { AdminGuard } from './services/admin.guards';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +43,8 @@ import { LoginComponent } from './components/login/login.component';
     ReactiveFormsModule
   ],
   providers: [
-    AppRoutingProviders
+    AppRoutingProviders,
+    AdminGuard
   ],
   bootstrap: [AppComponent]
 })

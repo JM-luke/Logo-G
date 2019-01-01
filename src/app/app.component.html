@@ -12,9 +12,9 @@
       <button mat-button *ngIf="identity"  [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> {{identity.nombre}}</button>
       <mat-menu #menu="matMenu">
         <a mat-menu-item>My data</a>
-        <a mat-menu-item *ngIf="identity && identity.role === 'ROLE_ADMIN'">View</a>
-        <a mat-menu-item *ngIf="identity && identity.role === 'ROLE_ADMIN'">Users</a>
-        <a mat-menu-item *ngIf="identity && identity.role === 'ROLE_ADMIN'">Config Logo!</a>
+        <a mat-menu-item *ngIf="identity" [routerLink]="['/view']">View</a>
+        <a mat-menu-item *ngIf="identity && identity.role === 'ROLE_ADMIN'" [routerLink]="['/users']">Users</a>
+        <a mat-menu-item *ngIf="identity && identity.role === 'ROLE_ADMIN'" [routerLink]="['/config']">Config Logo!</a>
         <a (click)="logout()" mat-menu-item>logout</a>
       </mat-menu>
 
