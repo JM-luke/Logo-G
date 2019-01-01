@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/jwt-interceptor';
 import { AppComponent } from './app.component';
-
+//import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //import { from } from 'rxjs';
+
 //Routing
 import { Routing, AppRoutingProviders } from './app.routing';
 //Animations
@@ -44,7 +46,12 @@ import { AdminGuard } from './services/admin.guards';
   ],
   providers: [
     AppRoutingProviders,
-    AdminGuard
+    AdminGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -3,6 +3,7 @@ var moment = require('moment');
 var secret = 'clave_secreta_del_proyecto_de_Logo_Generico';
 
 exports.ensureAuth = function(req, res, next){
+	console.log(req.headers);
 	if(!req.headers.authorization){
 		return res.status(403).send({message: 'La petición no tiene la cabecera de autenticación'});
 	}
