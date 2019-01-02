@@ -9,7 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { AdminGuard } from './services/admin.guards';
+import { AdminGuard } from './guards/admin.guards';
 
 
 

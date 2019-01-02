@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './interceptors/jwt-interceptor';
 import { AppComponent } from './app.component';
 //import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 //import { from } from 'rxjs';
 
+// Interceptors
+import { AuthInterceptor } from './interceptors/jwt-interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 //Routing
 import { Routing, AppRoutingProviders } from './app.routing';
 //Animations
@@ -21,7 +22,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { AdminGuard } from './services/admin.guards';
+import { AdminGuard } from './guards/admin.guards';
 
 
 @NgModule({
@@ -47,11 +48,8 @@ import { AdminGuard } from './services/admin.guards';
   providers: [
     AppRoutingProviders,
     AdminGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

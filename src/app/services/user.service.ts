@@ -42,9 +42,12 @@ export class UserService {
     return this.http.post(this.URL_API+'register', user);
   }
 
-  login(user: User){
-    return this.http.post(this.URL_API+'login', user);
-  }
+  // login(user: User){
+  //   return this.http.post(this.URL_API+'login', user);
+  // }
+
+  // logout(){
+  // }
 
   // signup(user_to_login, gettoken = null){
 	// 	if(gettoken != null){
