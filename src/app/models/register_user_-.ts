@@ -1,7 +1,7 @@
 export class RegisterUser {
     _id: number;
-    nombre: string;
-    apellidos: string;
+    name: string;
+    surname: string;
     email: string;
     role: string;
     password: {

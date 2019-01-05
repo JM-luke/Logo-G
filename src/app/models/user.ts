@@ -1,10 +1,10 @@
 
 // export class User {
-//     constructor(_id = '', __v = '', nombre = '', apellidos = '', email = '', role = 'ROLE_USER', pwd = '', confirmPwd = '', getToken = false){
+//     constructor(_id = '', __v = '', name = '', surname = '', email = '', role = 'ROLE_USER', pwd = '', confirmPwd = '', getToken = false){
 //         _id: _id;
 //         __v: __v
-//         nombre: nombre;
-//         apellidos: apellidos;
+//         name: name;
+//         surname: surname;
 //         email: email;
 //         role: role;
 //         password: {
@@ -16,8 +16,8 @@
 
 //     _id: String;
 //     __v: String
-//     nombre: String;
-//     apellidos: String;
+//     name: String;
+//     surname: String;
 //     email: String;
 //     role: String;
 //     password: String;
@@ -27,8 +27,8 @@
 export class User {
     _id: number;
     __v: number;
-    nombre: string;
-    apellidos: string;
+    name: string;
+    surname: string;
     email: string;
     role: string;
     password: {

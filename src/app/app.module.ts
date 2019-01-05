@@ -22,7 +22,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { AdminGuard } from './guards/admin.guards';
+import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -47,7 +47,7 @@ import { AdminGuard } from './guards/admin.guards';
   ],
   providers: [
     AppRoutingProviders,
-    AdminGuard,
+    AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

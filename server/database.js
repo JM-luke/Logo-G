@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const URI = 'mongodb://localhost/logoG';
+const config = require('./config.json');
 
-mongoose.connect(URI,{ useNewUrlParser: true })
+mongoose.connect(config.connectionString,{ useNewUrlParser: true })
   .then(db => console.log('Conectado a MongoDB!'))
   .catch(err => {
     console.log(err);

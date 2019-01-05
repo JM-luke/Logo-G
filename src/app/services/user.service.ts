@@ -41,7 +41,19 @@ export class UserService {
   register(user: User){
     return this.http.post(this.URL_API+'register', user);
   }
+  
+  getToken(){
+    const token = localStorage.getItem('token');
 
+    if(token != "undefined"){
+      this.token = token;
+    }else{
+      this.token = null;
+    }
+    return this.token; 
+  }
+
+  
   // login(user: User){
   //   return this.http.post(this.URL_API+'login', user);
   // }
@@ -61,26 +73,16 @@ export class UserService {
 	// 					 .map(res => res.json());
 	// }
 
-	getIdentity(){
-    const identity = JSON.parse(localStorage.getItem('identity'));
+	// getIdentity(){
+  //   const identity = JSON.parse(localStorage.getItem('identity'));
 
-		if(identity != "undefined"){
-			this.identity = identity;
-		}else{
-			this.identity = null;
-		}
-		return this.identity;
-	}
+	// 	if(identity != "undefined"){
+	// 		this.identity = identity;
+	// 	}else{
+	// 		this.identity = null;
+	// 	}
+	// 	return this.identity;
+	// }
 
-	getToken(){
-		const token = localStorage.getItem('token');
-
-		if(token != "undefined"){
-			this.token = token;
-		}else{
-			this.token = null;
-		}
-		return this.token; 
-	}
 
 }

@@ -16,21 +16,22 @@
             </mat-form-field>
 
             <mat-form-field >
-              <input  matInput name="nombre" type="text" formControlName="nombre" id="nombre"  placeholder="Name" >
+              <input  matInput name="name" type="text" formControlName="name" id="name"  placeholder="Name" >
               <mat-hint align="end">Not more then 40 characters long.</mat-hint>
-              <mat-error *ngIf="hasError('nombre', 'required')">Name is required</mat-error>
-              <mat-error *ngIf="hasError('nombre', 'maxlength')">You have more than 40 characters</mat-error>
+              <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+              <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 40 characters</mat-error>
             </mat-form-field>
             
             <mat-form-field >
-              <input  matInput name="apellidos" type="text" formControlName="apellidos" id="apellidos"  placeholder="Surname" >
+              <input  matInput name="surname" type="text" formControlName="surname" id="surname"  placeholder="Surname" >
               <mat-hint align="end">Not more then 40 characters long.</mat-hint>
-              <mat-error *ngIf="hasError('apellidos', 'required')">Surname is required</mat-error>
-              <mat-error *ngIf="hasError('apellidos', 'maxlength')">You have more than 40 characters</mat-error>
+              <mat-error *ngIf="hasError('surname', 'required')">Surname is required</mat-error>
+              <mat-error *ngIf="hasError('surname', 'maxlength')">You have more than 40 characters</mat-error>
             </mat-form-field>
 
             <mat-form-field >
-              <input  matInput name="email" type="text" formControlName="email" id="email"  placeholder="email" >
+              <input  matInput name="email" type="text" formControlName="email" (input)="userForm.patchValue({email: $event.target.value.toLowerCase()})"
+                id="email"  placeholder="email" >
               <mat-error *ngIf="hasError('email', 'required')">email is required</mat-error>
               <mat-error *ngIf="hasError('email', 'pattern')">invalid email</mat-error>
               <mat-hint align="end">valid email.</mat-hint>
@@ -89,8 +90,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let user of userService.users">
-              <td>{{user.nombre}}</td>
-              <td>{{user.apellidos}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.surname}}</td>
               <td>{{user.email}}</td>
               <td>{{user.role}}</td>
               <td>

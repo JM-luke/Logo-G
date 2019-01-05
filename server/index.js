@@ -6,6 +6,7 @@ const dataLogo = require('./dataLogo');
 const { mongoose } = require('./database'); //Conectar a MongoDB
 const io = require('socket.io')(http);
 const cors = require('cors');
+const jwt = require('./middlewares/jwt');
 
 
 //settings
@@ -16,11 +17,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors({origin: '*'}));
 
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//   next();
-// });
+// use JWT auth to secure the api
+app.use(jwt());
 
 //routes
 app.use('/api/users',require('./routes/user.routes'));
@@ -29,7 +27,6 @@ app.use('/api/login',require('./routes/login.routes'));
 app.use('/api/register',require('./routes/register.routes'));
 
 //starting the server
-
 setInterval(function () {
     dataLogo.updateLogo();
     io.sockets.emit('dataLogo', dataLogo.logoPositions[0]);

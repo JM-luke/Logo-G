@@ -9,8 +9,8 @@
             <div class="row">
               <div class="input-field col s12">
                 <input type="text" name="_id" #_id="ngModel" [(ngModel)]="userService.selectedUser._id" >
-                <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="userService.selectedUser.nombre" placeholder="Enter your Name">
-                <input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="userService.selectedUser.apellidos" placeholder="Enter your Surname">
+                <input type="text" name="name" #name="ngModel" [(ngModel)]="userService.selectedUser.name" placeholder="Enter your Name">
+                <input type="text" name="surname" #surname="ngModel" [(ngModel)]="userService.selectedUser.surname" placeholder="Enter your Surname">
                 <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" placeholder="Enter your email">
                 <input type="password" name="password" #password1="ngModel" [(ngModel)]="userService.selectedUser.password" placeholder="Enter your password">
                 <input type="password" name="password2" #password2="ngModel" [(ngModel)]="userService.selectedUser.password2" placeholder="Repeat your password">
@@ -42,7 +42,8 @@
 
                   <mat-form-field>
                       <mat-label>Email</mat-label>
-                      <input  matInput  type="text" placeholder="Email" formControlName="email" name="email">
+                      <input  matInput  type="text" placeholder="Email" formControlName="email" 
+                        (input)="loginForm.patchValue({email: $event.target.value.toLowerCase()})"name="email">
                       <mat-hint align="end">valid email.</mat-hint>
                       <mat-error *ngIf="hasError('email', 'required')">email is required</mat-error>
                       <mat-error *ngIf="hasError('email', 'pattern')">invalid email</mat-error>

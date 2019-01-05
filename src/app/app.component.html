@@ -9,12 +9,12 @@
       <button mat-button *ngIf="!currentUser" [routerLink]="['/register']" ><mat-icon>assignment_ind</mat-icon> Register</button>
       <button mat-button *ngIf="!currentUser" [routerLink]="['/login']" ><mat-icon>perm_identity</mat-icon> Login</button>
 
-      <button mat-button *ngIf="currentUser"  [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> {{currentUser.nombre}}</button>
+      <button mat-button *ngIf="currentUser"  [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> {{currentUser.name}}</button>
       <mat-menu #menu="matMenu">
-        <a mat-menu-item>My data</a>
+        <a mat-menu-item *ngIf="currentUser" >My data</a>
         <a mat-menu-item *ngIf="currentUser" [routerLink]="['/view']">View</a>
-        <a mat-menu-item *ngIf="currentUser && currentUser.role === 'ROLE_ADMIN'" [routerLink]="['/users']">Users</a>
-        <a mat-menu-item *ngIf="currentUser && currentUser.role === 'ROLE_ADMIN'" [routerLink]="['/config']">Config Logo!</a>
+        <a mat-menu-item *ngIf="isAdmin" [routerLink]="['/users']">Users</a>
+        <a mat-menu-item *ngIf="currentUser" [routerLink]="['/config']">Config Logo!</a>
         <a (click)="logout()" mat-menu-item>logout</a>
       </mat-menu>
 

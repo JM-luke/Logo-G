@@ -15,21 +15,22 @@
               <input  type="hidden" name="_id" >
 
               <mat-form-field >
-                <input  matInput name="nombre" type="text" formControlName="nombre" id="nombre"  placeholder="Enter your Name" >
+                <input  matInput name="name" type="text" formControlName="name" id="name"  placeholder="Enter your Name" >
                 <mat-hint align="end">Not more then 40 characters long.</mat-hint>
-                <mat-error *ngIf="hasError('nombre', 'required')">Name is required</mat-error>
-                <mat-error *ngIf="hasError('nombre', 'maxlength')">You have more than 40 characters</mat-error>
+                <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
+                <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 40 characters</mat-error>
               </mat-form-field>
               
               <mat-form-field >
-                <input  matInput name="apellidos" type="text" formControlName="apellidos" id="apellidos"  placeholder="Enter your Surname" >
+                <input  matInput name="surname" type="text" formControlName="surname" id="surname"  placeholder="Enter your Surname" >
                 <mat-hint align="end">Not more then 40 characters long.</mat-hint>
-                <mat-error *ngIf="hasError('apellidos', 'required')">Surname is required</mat-error>
-                <mat-error *ngIf="hasError('apellidos', 'maxlength')">You have more than 40 characters</mat-error>
+                <mat-error *ngIf="hasError('surname', 'required')">Surname is required</mat-error>
+                <mat-error *ngIf="hasError('surname', 'maxlength')">You have more than 40 characters</mat-error>
               </mat-form-field>
 
               <mat-form-field >
-                <input  matInput name="email" type="text" formControlName="email" id="email"  placeholder="Enter your email" >
+                <input  matInput name="email" type="text" formControlName="email" id="email" 
+                (input)="registerForm.patchValue({email: $event.target.value.toLowerCase()})" placeholder="Enter your email" >
                 <mat-hint align="end">valid email.</mat-hint>
                 <mat-error *ngIf="hasError('email', 'required')">email is required</mat-error>
                 <mat-error *ngIf="hasError('email', 'pattern')">invalid email</mat-error>

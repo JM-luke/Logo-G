@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { User } from 'src/app/models/user';
+import { User, Role } from 'src/app/models';
 import { passwordMatch } from '../../services/password-match'
+import { first } from 'rxjs/operators';
+
 
 
 declare var M: any;
@@ -16,7 +18,7 @@ declare var M: any;
 export class UsersComponent implements OnInit {
   
   public userForm: FormGroup;
-  private roleList: string[];
+  public roleList: String[];
   
 
   constructor(
@@ -25,13 +27,14 @@ export class UsersComponent implements OnInit {
   ) { }
     
   ngOnInit() {
-    this.roleList = ['ROLE_USER','ROLE_SUPER','ROLE_ADMIN'];
+    this.roleList = Object.values(Role);
     this.userForm = this.fb.group({
-      _id: [''],
-      nombre: ['', [Validators.required, Validators.maxLength(30)]],
-      apellidos: ['', [Validators.required, Validators.maxLength(30)]],
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      role: ['ROLE_USER', Validators.required],
+      _id: '',
+      name: ['', [Validators.required, Validators.maxLength(30)]],
+      surname: ['', [Validators.required, Validators.maxLength(30)]],
+      email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
+      role: [Role.User, Validators.required],
+      createdDate: '',
       password: this.fb.group({
         pwd: ['', [ Validators.minLength(6)]],
         confirmPwd: ['', [Validators.minLength(6)]]
@@ -45,30 +48,40 @@ export class UsersComponent implements OnInit {
   }
   
   addUser(userForm: FormGroup){
+    
     if(!this.userForm.valid){
       M.toast({html: 'Form No valid!'});
       return;
     }
     if(userForm.value._id){
+      // update user
       this.userService.putUser(userForm.value)
+        .pipe(first())
         .subscribe(data => {
           this.getUsers();
           M.toast({html: 'User updated!'});
           //this.resetForm();
-        });
-        
+        }),
+        error => {
+          M.toast({html: error});
+        };
     }else{
+      // create user
       delete userForm.value._id;
       this.userService.postUser(userForm.value)
-        .subscribe( (data)=> {
-          if(!data.hasOwnProperty('user')){
-            M.toast({html: 'User not saved!'});
-          }else{
-            M.toast({html: 'User saved!'});
-            this.getUsers();
-            //this.resetForm();
-          }
-      });
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.getUsers();
+          M.toast({html: 'User created!'});
+            //this.alertService.success('Registration successful', true);
+            //this.router.navigate(['/login']);
+        },
+        error => {
+          M.toast({html: error});
+            //this.alertService.error(error);
+            //this.loading = false;
+        });
     }
   }
 
@@ -103,8 +116,8 @@ export class UsersComponent implements OnInit {
     //this.userForm.reset();
       this.userForm.reset({
         _id: null,
-        nombre: {value: ' ', disabled: false},
-        apellidos: ' ',
+        name: {value: ' ', disabled: false},
+        surname: ' ',
         email: 'admin@admin.com',
         role: ' ',
         password: {

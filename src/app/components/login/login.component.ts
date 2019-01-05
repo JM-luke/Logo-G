@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-//import { UserService } from '../../services/user.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { User } from 'src/app/models/user';
+//import { User } from 'src/app/models';
 import { Router, ActivatedRoute }  from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
-//import { AlertService } from '../../services/authentication.service';
+
 
 declare var M: any;
 
@@ -13,18 +12,16 @@ declare var M: any;
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  //providers: [UserService]
+
 })
 export class LoginComponent implements OnInit {
 
-  //public identity: string;
   public token: string;
   public loginForm: FormGroup;
   public loading = false;
   private returnUrl: string;
 
   constructor(
-    //private userService: UserService,
     private authenticationService: AuthenticationService,
     private _router: Router,
     private route: ActivatedRoute,
@@ -65,33 +62,15 @@ export class LoginComponent implements OnInit {
             this.resetForm();
           },
           error => {
-            //this.alertService.error(error);
-            M.toast({html: 'You are not logged in :-(<br/> email or password incorrect!.'});
+            M.toast({html: 'You are not logged in :-(<br/> Email or password incorrect!.'});
             this.loading = false;
           });
-
-
-    // this.userService.login(form.value)
-    //   .subscribe((data: any)=> {
-    //     if(data.hasOwnProperty('user_logged')){
-    //       if(data.user_logged.token  && data.user_logged.user){
-    //         this.identity = data.user_logged.user;
-    //         localStorage.setItem('token', data.user_logged.token);
-    //         localStorage.setItem('identity', JSON.stringify(this.identity));
-    //         M.toast({html: 'logged :-)'});
-    //         this._router.navigate(['/']);
-    //         this.resetForm();
-    //         return;
-    //       }
-    //     }
-    //     M.toast({html: 'You are not logged in :-(<br/> email or password incorrect!.'});
-    //   });
   }
 
   resetForm(form?: FormGroup){
     if(form){
       form.reset();
-      //this.userService.selectedUser = new User();
+
     }
   }
 }
