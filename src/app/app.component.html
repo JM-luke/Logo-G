@@ -3,8 +3,7 @@
   <mat-toolbar-row>
       <span>{{title}}</span>
       <span class="spacer"></span>
-      <!--<mat-icon class="example-icon">favorite</mat-icon>
-      <mat-icon class="example-icon">delete</mat-icon> -->
+
 
       <button mat-button *ngIf="!currentUser" [routerLink]="['/register']" ><mat-icon>assignment_ind</mat-icon> Register</button>
       <button mat-button *ngIf="!currentUser" [routerLink]="['/login']" ><mat-icon>perm_identity</mat-icon> Login</button>
@@ -17,12 +16,10 @@
         <a mat-menu-item *ngIf="currentUser" [routerLink]="['/config']">Config Logo!</a>
         <a (click)="logout()" mat-menu-item>logout</a>
       </mat-menu>
-
-      
   </mat-toolbar-row>
 </mat-toolbar>
+
+<alert></alert>
+
 <router-outlet></router-outlet>  
 
-<!-- <i class="material-icons">face</i>
-<mat-icon>home</mat-icon>
-<app-status-logo [logoStatus]="logoStatusToPlot"></app-status-logo> -->

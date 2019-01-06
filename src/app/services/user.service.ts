@@ -3,9 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { GLOBAL } from '../global';
 
-
-// import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +13,6 @@ export class UserService {
   readonly URL_API = GLOBAL.url;
   private identity = null;
   private token = null;
-
 
   constructor(private http: HttpClient) { 
     this.selectedUser = new User();
@@ -51,38 +47,5 @@ export class UserService {
       this.token = null;
     }
     return this.token; 
-  }
-
-  
-  // login(user: User){
-  //   return this.http.post(this.URL_API+'login', user);
-  // }
-
-  // logout(){
-  // }
-
-  // signup(user_to_login, gettoken = null){
-	// 	if(gettoken != null){
-	// 		user_to_login.gettoken = gettoken;
-	// 	}
-
-	// 	let params = JSON.stringify(user_to_login);
-	// 	let headers = new Headers({'Content-Type':'application/json'});
-
-	// 	return this._http.post(this.url+'login', params, {headers: headers})
-	// 					 .map(res => res.json());
-	// }
-
-	// getIdentity(){
-  //   const identity = JSON.parse(localStorage.getItem('identity'));
-
-	// 	if(identity != "undefined"){
-	// 		this.identity = identity;
-	// 	}else{
-	// 		this.identity = null;
-	// 	}
-	// 	return this.identity;
-	// }
-
-
+  }  
 }

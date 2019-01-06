@@ -19,9 +19,9 @@ const appRoutes: Routes = [
    
     { path: '', component: HomeComponent },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent },
-    { path: 'users', canActivate: [AuthGuard] , component: UsersComponent, data: { roles: [Role.Admin]} },
-    { path: 'logo', component: LogoComponent },
+    { path: 'home', component: HomeComponent, data: { roles: [Role.Admin, Role.Controller, Role.User] }},
+    { path: 'users', canActivate: [AuthGuard] , component: UsersComponent, data: { roles: [Role.Admin] }},
+    { path: 'logo', component: LogoComponent, data: { roles: [Role.Admin, Role.Controller] }},
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
     { path: '**', component: NotFoundComponent}

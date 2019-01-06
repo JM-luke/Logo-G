@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-//import { User } from 'src/app/models';
+import { AlertService } from '../../services/alert.service';
 import { Router, ActivatedRoute }  from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private _router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private alertService: AlertService
   ) {
     if (this.authenticationService.currentUserValue) { 
       this._router.navigate(['/']);
@@ -58,11 +59,14 @@ export class LoginComponent implements OnInit {
         .subscribe(
           data => {
             this._router.navigate([this.returnUrl]);
+            this.alertService.success('logged :-)');
+            
             M.toast({html: 'logged :-)'});
             this.resetForm();
           },
-          error => {
-            M.toast({html: 'You are not logged in :-(<br/> Email or password incorrect!.'});
+          error => {           
+            this.alertService.error(error);
+            M.toast({html: `You are not logged in<br/> ${error}`});
             this.loading = false;
           });
   }

@@ -4,7 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 //import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//import { from } from 'rxjs';
 
 // Interceptors
 import { AuthInterceptor } from './interceptors/jwt-interceptor';
@@ -15,6 +14,7 @@ import { Routing, AppRoutingProviders } from './app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Material
 import { MaterialModule } from './material';
+// Components
 import { StatusLogoComponent } from './components/status-logo/status-logo.component';
 import { UsersComponent } from './components/users/users.component';
 import { HomeComponent } from './components/home/home.component';
@@ -23,7 +23,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
-
+import { AlertComponent } from './components/alert/alert.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { AuthGuard } from './guards/auth.guard';
     NotFoundComponent,
     RegisterComponent,
     LoginComponent,
+    AlertComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

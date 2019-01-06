@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const usersCtrl = require('../controllers/users.controller');
-// const md_auth = require('../middlewares/authenticated'); 
-// const md_admin = require('../middlewares/is_admin');
+var guard = require('express-jwt-permissions')();
+const role = require('../models/role');
 
-router.get('/', usersCtrl.getUsers);
-router.post('/', usersCtrl.createUser);
-router.get('/:id', usersCtrl.getUser);
-router.put('/:id', usersCtrl.editUser);
-router.delete('/:id', usersCtrl.deleteUser);
+router.get('/', guard.check(role.Admin), usersCtrl.getUsers);
+router.post('/', guard.check(role.Admin), usersCtrl.createUser);
+router.get('/:id', guard.check(role.Admin), usersCtrl.getUser);
+router.put('/:id', guard.check(role.Admin), usersCtrl.editUser);
+router.delete('/:id', guard.check(role.Admin), usersCtrl.deleteUser);
 
 module.exports = router;

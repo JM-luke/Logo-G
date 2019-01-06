@@ -1,37 +1,6 @@
-<!-- 
+
 <div class="container">
   <div class="row formulario">
-
-    <div class="col l4 m8 s12" layout-align="center">
-      <div class="card">
-        <div class="card-content">
-          <form #userForm="ngForm" (ngSubmit)="loginUser(userForm)">
-            <div class="row">
-              <div class="input-field col s12">
-                <input type="text" name="_id" #_id="ngModel" [(ngModel)]="userService.selectedUser._id" >
-                <input type="text" name="name" #name="ngModel" [(ngModel)]="userService.selectedUser.name" placeholder="Enter your Name">
-                <input type="text" name="surname" #surname="ngModel" [(ngModel)]="userService.selectedUser.surname" placeholder="Enter your Surname">
-                <input type="text" name="email" #email="ngModel" [(ngModel)]="userService.selectedUser.email" placeholder="Enter your email">
-                <input type="password" name="password" #password1="ngModel" [(ngModel)]="userService.selectedUser.password" placeholder="Enter your password">
-                <input type="password" name="password2" #password2="ngModel" [(ngModel)]="userService.selectedUser.password2" placeholder="Repeat your password">
-              </div>
-              <div class="card-action">
-                <div class="input-field col s12">
-                  <button class="btn right" (click)="resetForm(userForm)">Clean</button>
-                  <button class="btn right">Save</button>
-                </div>
-
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<div class="container">
-  <div class="row formulario">
-
     <div class="col l4 m8 s12">
           <mat-toolbar>
             <span>LOGIN</span>
@@ -58,13 +27,18 @@
                   </mat-form-field>
                   
                   <mat-card-actions>
+                      
+                      <img *ngIf="loading" class="pl-3" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                       <button mat-raised-button type="reset" class="btn right" color="primary" >Clean</button>
-                      <button mat-raised-button type="submit" class="btn right"  [disabled]="!loginForm.valid" color="sucessfull">Login</button>
+                      <button mat-raised-button type="submit" class="btn right"  [disabled]="!loginForm.valid || loading" color="sucessfull">Login</button>
       
                   </mat-card-actions>
                 </form>
             </mat-card-content>
           </mat-card>
+    </div>
+    <div class="col s4">
+        <app-spinner *ngIf="loading"></app-spinner>
     </div>
 
 

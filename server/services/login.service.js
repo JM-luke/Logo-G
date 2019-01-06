@@ -10,44 +10,19 @@ module.exports = {
 async function authenticate({ email, password }) {
   const user = await User.findOne({ email });
   if (user && bcrypt.compareSync(password, user.password)) {
-      const { hash, ...userWithoutHash } = user.toObject();
-      const token = jwt.sign({ sub: user.id }, config.secret);
-      return {
-          ...userWithoutHash,
-          token
-      };
+    // delete password from user Object
+    const { password, ...userWithoutPassword } = user.toObject();
+    const payload = {
+      sub: user.id,
+      name: user.name,
+      surmname: user.surmname,
+      email: user.email,
+      permissions: [user.role]
+    }
+    const token = jwt.sign(payload, config.secret, { expiresIn: '24h' });
+    return {
+      ...userWithoutPassword,
+      token
+    };
   }
 }
-
-
-  // const { email } = req.body; 
-  //   const { password } = req.body;
-
-  //   if(email && password){
-
-  //     await User.findOne({ email: email.toLowerCase() }, (err, user) => {
-  //         if(err){
-  //             res.json({ status: 'Server Error'});
-  //         }else{
-  //             if(user){
-  //               bcrypt.compare(password, user.password, (err, check) => {
-  //                 if(check){
-  //                   const token = jwt.createToken(user);
-  //                   let user_logged = {};
-  //                   user_logged.user = user;
-  //                   user_logged.user.password = undefined;
-  //                   user_logged.token = token;
-  //                   console.log(user_logged);
-  //                   res.json({ user_logged });
-  //                 }else{
-  //                   console.log('NO CHECK');
-  //                   res.json({ status: 'You are not logged in'});
-  //                 }
-  //               });
-  //             }else{
-  //                 res.json({ status: 'You are not logged in'});
-  //             }
-  //         }
-  //     });
-  //   }  
-//}

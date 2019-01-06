@@ -1,0 +1,14 @@
+.spinner-h2 {
+  margin: 10px;
+}
+
+.spinner-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 20px;
+}
+
+.spinner-margin {
+  margin: 0 10px;
+}

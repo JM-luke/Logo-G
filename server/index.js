@@ -7,6 +7,7 @@ const { mongoose } = require('./database'); //Conectar a MongoDB
 const io = require('socket.io')(http);
 const cors = require('cors');
 const jwt = require('./middlewares/jwt');
+const errorHandler = require('./middlewares/error-handler');
 
 
 //settings
@@ -19,12 +20,13 @@ app.use(cors({origin: '*'}));
 
 // use JWT auth to secure the api
 app.use(jwt());
-
 //routes
 app.use('/api/users',require('./routes/user.routes'));
 app.use('/api/dataLogo',require('./routes/dataLogo.routes'));
 app.use('/api/login',require('./routes/login.routes'));
 app.use('/api/register',require('./routes/register.routes'));
+
+app.use(errorHandler);
 
 //starting the server
 setInterval(function () {

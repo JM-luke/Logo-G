@@ -4,10 +4,12 @@ import { MatButtonModule,
   MatMenuModule,
   MatCardModule,
   MatInputModule,
-  MatSelectModule
+  MatSelectModule,
+  MatProgressSpinnerModule,
+  MatFormFieldModule,
+  MatIconModule, 
  } from '@angular/material';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
+
 import { NgModule } from '@angular/core';
 
 @NgModule({
@@ -20,7 +22,8 @@ import { NgModule } from '@angular/core';
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-  MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -31,7 +34,8 @@ import { NgModule } from '@angular/core';
     MatMenuModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule    
+    MatSelectModule,
+    MatProgressSpinnerModule    
   ],
 })
 export class MaterialModule { }
