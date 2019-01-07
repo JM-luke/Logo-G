@@ -57,5 +57,5 @@ async function update(id, userParam){
   if (pass !== null){
     userParam.password = bcrypt.hashSync(pass, 10);
   }
-  await User.findByIdAndUpdate(id,{$set:userParam});
+  await User.findOneAndUpdate({"_id":id},{$set:userParam});
 }
