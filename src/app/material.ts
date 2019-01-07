@@ -8,9 +8,11 @@ import { MatButtonModule,
   MatProgressSpinnerModule,
   MatFormFieldModule,
   MatIconModule, 
+
  } from '@angular/material';
 
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -23,7 +25,8 @@ import { NgModule } from '@angular/core';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FlexLayoutModule
   ],
   exports: [
     MatButtonModule,
@@ -35,7 +38,8 @@ import { NgModule } from '@angular/core';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatProgressSpinnerModule    
+    MatProgressSpinnerModule,
+    FlexLayoutModule    
   ],
 })
 export class MaterialModule { }
