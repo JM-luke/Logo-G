@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { passwordMatch } from '../../services/password-match';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AlertService } from '../../services/alert.service';
 
 
 
@@ -20,11 +21,13 @@ declare var M: any;
 export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup;
+  public loading = false;
 
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
     private router: Router,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -50,6 +53,7 @@ export class RegisterComponent implements OnInit {
       M.toast({html: 'Form No valid!'});
       return;
     }
+    this.loading = true
     this.userService.selectedUser = registerForm.value;
     if(registerForm.value._id){
 
@@ -67,13 +71,14 @@ export class RegisterComponent implements OnInit {
         .subscribe(
           data => {
             M.toast({html: 'Registered Successfully :-)'});
-            //this.alertService.success('Registration successful', true);
+            this.alertService.success('Registration successful', true);
             this.router.navigate(['/login']);
+            this.loading = false;
           },
           error => {
             M.toast({html: error});
-            //this.alertService.error(error);
-            //this.loading = false;
+            this.alertService.error(error);
+            this.loading = false;
           });
     }
    }

@@ -4,6 +4,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { User, Role } from 'src/app/models';
 import { passwordMatch } from '../../services/password-match'
 import { first } from 'rxjs/operators';
+import { AlertService } from '../../services/alert.service';
 
 
 
@@ -19,11 +20,13 @@ export class UsersComponent implements OnInit {
   
   public userForm: FormGroup;
   public roleList: String[];
+  public loading = false;
   
 
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
+    private alertService: AlertService
   ) { }
     
   ngOnInit() {
@@ -36,23 +39,50 @@ export class UsersComponent implements OnInit {
       role: [Role.User, Validators.required],
       createdDate: '',
       password: this.fb.group({
-        pwd: ['', [ Validators.minLength(6)]],
-        confirmPwd: ['', [Validators.minLength(6)]]
+        pwd: ['',[Validators.required, Validators.minLength(6)]],
+        confirmPwd: ['',[Validators.required, Validators.minLength(6)]]
       },{ validator: passwordMatch })
     });
     this.getUsers();
+    this.idSubscribe();
   }
-
+  
   public hasError = (controlName: string, errorName: string) =>{
     return this.userForm.get(controlName).hasError(errorName);
+  };
+
+  get id(){
+    return this.userForm.get("_id");
+  }
+  get pwd(){
+    return this.userForm.get("password.pwd");
+  }
+  get confirmPwd(){
+    return this.userForm.get("password.confirmPwd");
+  }
+  
+  private idSubscribe(){
+    this.id.valueChanges.subscribe((value) => {
+      if(value){
+        this.pwd.clearValidators();
+        this.confirmPwd.clearValidators();
+        this.pwd.updateValueAndValidity();
+        this.confirmPwd.updateValueAndValidity();
+      }else{
+        this.pwd.setValidators([Validators.required, Validators.minLength(6)]);
+        this.confirmPwd.setValidators([Validators.required, Validators.minLength(6)]);
+        this.pwd.updateValueAndValidity();
+        this.confirmPwd.updateValueAndValidity();
+      }
+    });
   }
   
   addUser(userForm: FormGroup){
-    
     if(!this.userForm.valid){
       M.toast({html: 'Form No valid!'});
       return;
     }
+    this.loading = true;
     if(userForm.value._id){
       // update user
       this.userService.putUser(userForm.value)
@@ -60,10 +90,13 @@ export class UsersComponent implements OnInit {
         .subscribe(data => {
           this.getUsers();
           M.toast({html: 'User updated!'});
-          //this.resetForm();
+          this.alertService.success('Registration successful', true);
+          this.loading = false;
         }),
         error => {
+          this.alertService.error(error);
           M.toast({html: error});
+          this.loading = false;
         };
     }else{
       // create user
@@ -74,13 +107,14 @@ export class UsersComponent implements OnInit {
         data => {
           this.getUsers();
           M.toast({html: 'User created!'});
-            //this.alertService.success('Registration successful', true);
-            //this.router.navigate(['/login']);
+          this.alertService.success('Registration successful', true);
+          this.loading = false;
+          //this.router.navigate(['/login']);
         },
         error => {
           M.toast({html: error});
-            //this.alertService.error(error);
-            //this.loading = false;
+          this.alertService.error(error);
+          this.loading = false;
         });
     }
   }
@@ -99,8 +133,12 @@ export class UsersComponent implements OnInit {
   editUser(user: User){
     this.userService.selectedUser = user;
     delete user.__v;
-    user.password = {pwd: null, confirmPwd: null};
+    user.password = { pwd: null, confirmPwd: null };
     this.userForm.setValue(user);
+    this.pwd.clearValidators();
+    this.pwd.updateValueAndValidity();
+    this.confirmPwd.clearValidators();
+    this.confirmPwd.updateValueAndValidity();
   }
 
   getUsers(){
