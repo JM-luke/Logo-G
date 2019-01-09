@@ -4,8 +4,10 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { passwordMatch } from '../../services/password-match';
 import { first } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 
 
@@ -22,13 +24,17 @@ export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup;
   public loading = false;
+  public currentUser: User;
+  private currentUserSubscription: Subscription;
 
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
     private router: Router,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    private authenticationService: AuthenticationService
+  ) { 
+  }
 
   ngOnInit() {
     //
@@ -42,6 +48,10 @@ export class RegisterComponent implements OnInit {
         confirmPwd: ['',[Validators.required, Validators.minLength(6)]]
       },{ validator: passwordMatch })
     });
+    this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      console.log(this.currentUser);
+    }); 
   }
 
   public hasError = (controlName: string, errorName: string) =>{
@@ -54,10 +64,9 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.loading = true
-    this.userService.selectedUser = registerForm.value;
-    if(registerForm.value._id){
+    //this.userService.selectedUser = registerForm.value;
+    if(this.currentUser){
 
-      console.log('MyData');
       // this.userService.putUser(registerFormValue)
       //   .subscribe(res => {
       //     this.resetForm(form);

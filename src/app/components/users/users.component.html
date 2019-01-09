@@ -38,6 +38,14 @@
             </mat-form-field>
 
             <mat-form-field>
+              <mat-select name="emailGroups" formControlName="emailGroups" multiple  placeholder="emailGroups">
+                <mat-option *ngFor= "let eg of emailGroups"  [value] = "eg">
+                    {{eg}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field>
               <mat-select name="role" formControlName="role" id="role"  placeholder="role">
                 <mat-option *ngFor= "let r of roleList"  [value] = "r">
                    {{r}}

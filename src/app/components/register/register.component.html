@@ -6,7 +6,7 @@
       <div >
         <mat-card>
           <mat-card-title>
-            Register
+              {{currentUser ? 'Edit my data' : 'Register'}}
           </mat-card-title>
           <form  [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm)">
             
@@ -57,7 +57,7 @@
           
             <mat-card-actions>
               <button mat-raised-button type="reset" class="btn right" color="primary" (click)="resetForm(registerForm)">Clean</button>
-              <button mat-raised-button type="submit" class="btn right" [disabled]="!registerForm.valid" color="sucessfull">Save</button>
+              <button mat-raised-button type="submit" class="btn right" [disabled]="!registerForm.valid" color="sucessfull">{{ currentUser ? 'Edit' : 'Register' }}</button>
             </mat-card-actions>
           </form>
         </mat-card>

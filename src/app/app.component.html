@@ -10,7 +10,7 @@
 
       <button mat-button *ngIf="currentUser"  [matMenuTriggerFor]="menu"><mat-icon>account_circle</mat-icon> {{currentUser.name}}</button>
       <mat-menu #menu="matMenu">
-        <a mat-menu-item *ngIf="currentUser" >My data</a>
+        <a mat-menu-item *ngIf="currentUser" [routerLink]="['/register']">My data</a>
         <a mat-menu-item *ngIf="currentUser" [routerLink]="['/view']">View</a>
         <a mat-menu-item *ngIf="isAdmin" [routerLink]="['/users']">Users</a>
         <a mat-menu-item *ngIf="currentUser" [routerLink]="['/config']">Config Logo!</a>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { User, Role } from 'src/app/models';
+import { User, Role, EmailGroups } from 'src/app/models';
 import { passwordMatch } from '../../services/password-match'
 import { first } from 'rxjs/operators';
 import { AlertService } from '../../services/alert.service';
@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit {
   
   public userForm: FormGroup;
   public roleList: String[];
+  public emailGroups: String[];
   public loading = false;
   
 
@@ -31,11 +32,13 @@ export class UsersComponent implements OnInit {
     
   ngOnInit() {
     this.roleList = Object.values(Role);
+    this.emailGroups =  Object.values(EmailGroups);
     this.userForm = this.fb.group({
       _id: '',
       name: ['', [Validators.required, Validators.maxLength(30)]],
       surname: ['', [Validators.required, Validators.maxLength(30)]],
       email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]],
+      emailGroups: [],
       role: [Role.User, Validators.required],
       createdDate: '',
       password: this.fb.group({
@@ -83,7 +86,9 @@ export class UsersComponent implements OnInit {
       return;
     }
     this.loading = true;
+    console.log(`Emails Group ${userForm.value.emailGroups}`);
     if(userForm.value._id){
+      
       // update user
       this.userService.putUser(userForm.value)
         .pipe(first())

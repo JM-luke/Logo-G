@@ -6,6 +6,7 @@ const UserSchema = new Schema ({
     name: { type: String, required: true },
     surname: { type: String, required: true }, 
     email: { type: String, unique: true, required: true },
+    emailGroups: { type: [String], required: false },
     role: { type: String, required: true, default: Role.User },
     password: { type: String, required: true },
     //hash: { type: String, required: true },
