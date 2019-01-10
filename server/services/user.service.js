@@ -41,8 +41,9 @@ async function create(userParam) {
   await user.save();
 }
 
-async function update(id, userParam){
+async function update(id, sub, userParam){
   
+  if(id !== sub) throw 'User not authorized!';
   const user = await User.findById(id);
   // validate
   if (!user) throw 'User not found';

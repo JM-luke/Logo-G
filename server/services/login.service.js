@@ -14,9 +14,9 @@ async function authenticate({ email, password }) {
     const { password, ...userWithoutPassword } = user.toObject();
     const payload = {
       sub: user.id,
-      name: user.name,
-      surmname: user.surmname,
-      email: user.email,
+      // name: user.name,
+      // surmname: user.surmname,
+      // email: user.email,
       permissions: [user.role]
     }
     const token = jwt.sign(payload, config.secret, { expiresIn: '24h' });

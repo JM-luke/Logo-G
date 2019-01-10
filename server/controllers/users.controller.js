@@ -26,8 +26,8 @@ usersCtrl.deleteUser = (req, res, next) => {
     .catch(err => next(err));
 };
 
-usersCtrl.editUser = (req, res, next) => {
-  userService.update(req.params.id, req.body)
+usersCtrl.editUser = (req, res, next) => {  
+  userService.update(req.params.id, req.user.sub, req.body)
     .then(() => res.json({}))
     .catch(err => next(err));
 }

@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     //
     this.registerForm = this.fb.group({
+      _id:'',
       name: ['', [Validators.required, Validators.maxLength(30)]],
       surname: ['', [Validators.required, Validators.maxLength(30)]],
       email: ['', [Validators.required, Validators.pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)]],
@@ -48,33 +49,47 @@ export class RegisterComponent implements OnInit {
         confirmPwd: ['',[Validators.required, Validators.minLength(6)]]
       },{ validator: passwordMatch })
     });
+    this.getUser();
+  }
+  
+  private getUser(){
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
-      console.log(this.currentUser);
-    }); 
+    });
+    if(this.currentUser){
+      
+      this.registerForm.get("name").setValue(this.currentUser.name);
+      this.registerForm.get("surname").setValue(this.currentUser.surname);
+      this.registerForm.get("email").setValue(this.currentUser.email);
+    }
   }
 
   public hasError = (controlName: string, errorName: string) =>{
     return this.registerForm.get(controlName).hasError(errorName);
   }
-
+  
   registerUser(registerForm: FormGroup){
     if(!this.registerForm.valid){
       M.toast({html: 'Form No valid!'});
       return;
     }
+    this.registerForm.get("_id").setValue(this.currentUser._id);
     this.loading = true
     //this.userService.selectedUser = registerForm.value;
     if(this.currentUser){
-
-      // this.userService.putUser(registerFormValue)
-      //   .subscribe(res => {
-      //     this.resetForm(form);
-      //     M.toast({html: 'Usuario actualizado!'});
-      //     //this.getUsers();
-      //   })
+      this.userService.putUser(registerForm.value)
+        .subscribe(
+        data => {
+          M.toast({html: 'User updated!'});
+          this.alertService.success('Update successful', true);
+          this.loading = false;
+        },
+        error => {
+          M.toast({html: error});
+          this.alertService.error(error);
+          this.loading = false;
+        });
     }else{
-      console.log('register');
       this.userService.register(registerForm.value)
         .pipe(first())
         .subscribe(

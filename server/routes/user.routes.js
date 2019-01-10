@@ -7,7 +7,7 @@ const role = require('../models/role');
 router.get('/', guard.check(role.Admin), usersCtrl.getUsers);
 router.post('/', guard.check(role.Admin), usersCtrl.createUser);
 router.get('/:id', guard.check(role.Admin), usersCtrl.getUser);
-router.put('/:id', guard.check(role.Admin), usersCtrl.editUser);
+router.put('/:id', usersCtrl.editUser);
 router.delete('/:id', guard.check(role.Admin), usersCtrl.deleteUser);
 
 module.exports = router;

@@ -86,9 +86,7 @@ export class UsersComponent implements OnInit {
       return;
     }
     this.loading = true;
-    console.log(`Emails Group ${userForm.value.emailGroups}`);
     if(userForm.value._id){
-      
       // update user
       this.userService.putUser(userForm.value)
         .pipe(first())
