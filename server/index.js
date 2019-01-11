@@ -25,7 +25,7 @@ app.use('/api/users',require('./routes/user.routes'));
 app.use('/api/dataLogo',require('./routes/dataLogo.routes'));
 app.use('/api/login',require('./routes/login.routes'));
 app.use('/api/register',require('./routes/register.routes'));
-
+app.use('api/controls', require('./routes/controls.routes'));
 app.use(errorHandler);
 
 //starting the server
